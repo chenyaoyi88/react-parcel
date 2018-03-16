@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "target": "es5",
+    "types": [
+      "node"
+    ],
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "declaration": false,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    // 解析非相对模块名的基准目录
+    "baseUrl": "./src",
+    // 重定向输出目录
+    "outDir": "dist"
+  }
+}
