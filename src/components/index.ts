@@ -1,2 +1,2 @@
 export * from './form';
-export * from './toast';
+export * from './notification';

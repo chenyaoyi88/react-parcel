@@ -4,7 +4,7 @@ const styles = require('./index.scss');
 interface Button_Props {
     type?: string;
     children?: any;
-    btnClass: string;
+    btnClass?: string;
     disabled?: boolean;
     style?: React.CSSProperties;
     onClick?: (...args: any[]) => void;
