@@ -60,7 +60,7 @@ function toastNotice(opts: any) {
     const options: Toast_Options = opts || {};
     options.duration = options.duration || 1000;
     options.mask = options.mask || false;
-    options.onClose = options.onClose || function onClose() {};
+    options.onClose = options.onClose || function onClose() { };
 
     let notificationInstance = getNewNotification();
 
@@ -68,15 +68,15 @@ function toastNotice(opts: any) {
         duration: options.duration,
         mask: options.mask,
         content: options.type ? (
-            <div className={[styles["cyy-toast-box"], styles[options.type]].join(" ")}>
-                <div className={[styles["cyy-toast-content"], styles["slideInUp"], styles["animated"]].join(" ")}>
+            <div className={classNames(styles["cyy-toast-box"], (options.mask ? "" : styles["mask-hide"]), styles[options.type])}>
+                <div className={classNames(styles["cyy-toast-content"], styles["slideInUp"], styles["animated"])}>
                     {/* <div>放图片的位置</div> */}
                     {options.content}
                 </div>
             </div>
         ) : (
-                <div className={[styles["cyy-toast-box"], (options.mask ? "" : styles["mask-hide"])].join(" ")}>
-                    <div className={[styles["cyy-toast-content"], styles["slideInUp"], styles["animated"]].join(" ")}>{options.content}</div>
+                <div className={classNames(styles["cyy-toast-box"], (options.mask ? "" : styles["mask-hide"]))}>
+                    <div className={classNames(styles["cyy-toast-content"], styles["slideInUp"], styles["animated"])}>{options.content}</div>
                 </div>
             ),
         onClose: () => {
