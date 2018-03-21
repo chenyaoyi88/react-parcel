@@ -1,10 +1,6 @@
-export const ADD_TODO = '添加 TODO';
+export const ADD_TODO = 'ADD_TODO';
 
-function addTodo(text) {
-    return {
-        type: ADD_TODO,
-        text
-    }
-}
-
-export { addTodo };
+export const addTodo = (text: string) => ({
+    type: ADD_TODO,
+    text
+})

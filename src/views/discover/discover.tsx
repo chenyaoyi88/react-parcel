@@ -10,13 +10,14 @@ class Discover extends React.Component<any, any>{
     }
 
     add() {
-        console.log(123);
+        this.props.handleAddTodo('fuck');
     }
 
     render() {
         return (
             <div className="discover-box">
                 <p>this is Discover page!</p>
+                <p>{this.props.addTodoData}</p>
                 <p>
                     <button onClick={() => this.add()}>按钮</button>
                 </p>

@@ -1,6 +1,10 @@
 import { ADD_TODO } from './action';
 
-const reducer = function (state, action) {
+const initialState = {
+    text: '默认值1'
+};
+
+const addTodoReducer = function (state: any = initialState, action: any) {
     let newState = {};
     switch (action.type) {
         case ADD_TODO:
@@ -14,4 +18,4 @@ const reducer = function (state, action) {
     return Object.assign({}, state, newState);
 };
 
-export { reducer };
+export { addTodoReducer };

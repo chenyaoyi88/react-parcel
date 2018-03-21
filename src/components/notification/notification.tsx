@@ -1,6 +1,6 @@
-// Notification 是 Notice父组件，容器
+// Notification 是 Notice 父组件，容器
 // 是动态插入和删除 DOM 节点的核心
-// 同时也向上暴露给Toast重写改变自己的方法
+// 同时也向上暴露给 Toast 重写改变自己的方法
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Notice } from './notice';
@@ -32,11 +32,14 @@ class Notification extends React.Component<null, Notification_States> {
         );
 
         return {
-            notice(noticeProps) {
+            addNotice(noticeProps) {
                 notification.add(noticeProps);
             },
-            removeNotice(key) {
-                notification.remove(key);
+            removeNoticeByKey(key) {
+                notification.removeByKey(key);
+            },
+            removeNoticeByType(type) {
+                notification.removeByType(type);
             },
             destroy() {
                 ReactDOM.unmountComponentAtNode(oDivNotification);
@@ -70,13 +73,22 @@ class Notification extends React.Component<null, Notification_States> {
                 hasMask: mask
             });
         }
+
     }
 
-    remove(key) {
+    removeByKey(key) {
         // 根据key删除对应
         this.setState(previousState => {
             return {
                 notices: previousState.notices.filter(notice => notice.key !== key)
+            };
+        });
+    }
+
+    removeByType(type) {
+        this.setState(previousState => {
+            return {
+                notices: previousState.notices.filter(notice => notice.type !== type)
             };
         });
     }
@@ -89,14 +101,12 @@ class Notification extends React.Component<null, Notification_States> {
         notices.map((notice) => {
             // 每个 Notice onClose 的时候 删除掉 notices 中对应 key 的 notice
             const closeCallback = () => {
-                __this.remove(notice.key);
+                __this.removeByKey(notice.key);
                 // 如果有用户传入的 onClose 执行
                 notice.onClose && notice.onClose();
             };
 
-            result.push(
-                <Notice key={notice.key} {...notice} onClose={closeCallback} />
-            );
+            result.push(<Notice key={notice.key} {...notice} onClose={closeCallback} />);
         });
 
         return result;
@@ -112,11 +122,11 @@ class Notification extends React.Component<null, Notification_States> {
     }
 
     render() {
-        const noticesDOM = this.getNoticeDOM();
         const maskDOM = this.getMaskDOM();
+        const noticesDOM = this.getNoticeDOM();
 
         return (
-            <div className={styles["cyy-notification-box"]}>
+            <div>
                 {maskDOM}
                 {noticesDOM}
             </div>

@@ -1,22 +1,18 @@
 /**
  * Notice 是 Toast 最底层组件
  * 每个黑色的小框框其实都是一个 Notice
- * Notice核心就是组件初始化的时候 生成一个定时器
+ * Notice 核心就是组件初始化的时候 生成一个定时器
  * 根据输入的时间 加载一个动画 然后执行输入的回调
- * Notice的显示和隐藏收到父组件Notification的绝对控制
+ * Notice 的显示和隐藏收到父组件 Notification 的绝对控制
 */
 
 import * as React from 'react';
 import * as classNames from 'classnames';
-const styles = require('./notice.scss');
 
 interface Notice_Props {
-    number: number;
-    any: any;
-    func: any;
+    type?: string;
     duration?: number;
     content?: any;
-    onClick?: (...args: any[]) => void;
     onClose?: (...args: any[]) => void;
 }
 
@@ -33,16 +29,30 @@ class Notice extends React.Component<Notice_Props, any> {
     }
 
     componentDidMount() {
-        if (this.props.duration > 0) {
-            this.closeTimer = setTimeout(() => {
-                this.close();
-            }, this.props.duration);
+        const { type, duration } = this.props;
+        switch (type) {
+            case 'toast':
+                if (duration > 0) {
+                    this.closeTimer = setTimeout(() => {
+                        this.close();
+                    }, duration);
+                }
+                break;
+            case 'loading':
+                break;
         }
     }
 
     componentWillUnmount() {
-        // 当有意外关闭的时候 清掉定时器
-        this.clearCloseTimer();
+        const { type, duration } = this.props;
+        switch (type) {
+            case 'toast':
+                // 当有意外关闭的时候 清掉定时器
+                this.clearCloseTimer();
+                break;
+            case 'loading':
+                break;
+        }
     }
 
     clearCloseTimer() {
@@ -62,7 +72,7 @@ class Notice extends React.Component<Notice_Props, any> {
 
     render() {
         return (
-            <div className={styles["cyy-notice-box"]}>
+            <div data-id="cyy-notice-box">
                 {this.props.content}
             </div>
         )
